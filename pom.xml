@@ -25,7 +25,7 @@
 
   <groupId>org.jszip.redist</groupId>
   <artifactId>bootstrap</artifactId>
-  <version>2.1.1-SNAPSHOT</version>
+  <version>2.1.1</version>
   <packaging>jszip</packaging>
 
   <name>Bootstrap</name>
@@ -48,7 +48,7 @@
     <connection>scm:git:git://github.com/jszip/bootstrap-redist.git</connection>
     <developerConnection>scm:git:git@github.com:jszip/bootstrap-redist.git</developerConnection>
     <url>http://github.com/jszip/bootstrap-redist/tree/master/</url>
-    <tag>HEAD</tag>
+    <tag>bootstrap-2.1.1</tag>
   </scm>
   <issueManagement>
     <system>github</system>
