@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright 2011-2012 Stephen Connolly.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.jszip</groupId>
+    <artifactId>jszip-parent</artifactId>
+    <version>10</version>
+  </parent>
+
+  <groupId>org.jszip.redist</groupId>
+  <artifactId>bootstrap</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+  <packaging>jszip</packaging>
+
+  <name>Bootstrap</name>
+  <description>
+    Bootstrap is a sleek, intuitive, and powerful front-end framework for faster and easier web development.
+  </description>
+  <url>http://jszip.org/redist/bootstrap</url>
+  <prerequisites>
+    <maven>3.0.4</maven>
+  </prerequisites>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://raw.github.com/twitter/bootstrap/v${project.version}/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/jszip/bootstrap-redist.git</connection>
+    <developerConnection>scm:git:git@github.com:jszip/bootstrap-redist.git</developerConnection>
+    <url>http://github.com/jszip/bootstrap-redist/tree/master/</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>github</system>
+    <url>http://github.com/jszip/bootstrap-redist/issues</url>
+  </issueManagement>
+  <distributionManagement>
+    <site>
+      <id>github.com</id>
+      <url>gitsite:git@github.com/jszip/jszip.github.com.git/redist/bootstrap</url>
+    </site>
+  </distributionManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jszip.redist</groupId>
+      <artifactId>jquery</artifactId>
+      <!-- current minimum published jQuery version matching requirements of bootstrap 2.x -->
+      <version>1.7.1</version>
+      <type>jszip</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jszip.maven</groupId>
+        <artifactId>jszip-maven-plugin</artifactId>
+        <version>0.1-alpha-7</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>regex-property</goal>
+            </goals>
+            <configuration>
+              <name>bootstrap-version</name>
+              <value>${project.version}</value>
+              <regex>^([\d\.]+)(-\d+-)?(-SNAPSHOT)?$</regex>
+              <replacement>$1</replacement>
+              <failIfNoMatch>false</failIfNoMatch>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>wagon-maven-plugin</artifactId>
+        <version>1.0-beta-4</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>download-single</goal>
+            </goals>
+            <configuration>
+              <url>https://github.com/twitter/bootstrap/zipball</url>
+              <fromFile>v${bootstrap-version}</fromFile>
+              <toFile>${project.build.directory}/antrun/bootstrap.zip</toFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <unzip src="${project.build.directory}/antrun/bootstrap.zip" dest="${project.build.outputDirectory}/">
+                  <patternset>
+                    <include name="twitter-bootstrap-*/less/**/*.less"/>
+                    <include name="twitter-bootstrap-*/js/*.js"/>
+                    <include name="twitter-bootstrap-*/img/*.*"/>
+                    <include name="twitter-bootstrap-*/fonts/*.*"/>
+                  </patternset>
+                  <mapper>
+                    <regexpmapper from="twitter-bootstrap-[a-f0-9]*/(.*)" to="bootstrap/\1"/>
+                  </mapper>
+                </unzip>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-verifier-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <phase>test</phase>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
