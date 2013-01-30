@@ -25,7 +25,7 @@
 
   <groupId>org.jszip.redist</groupId>
   <artifactId>bootstrap</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0</version>
   <packaging>jszip</packaging>
 
   <name>Bootstrap</name>
@@ -48,7 +48,7 @@
     <connection>scm:git:git://github.com/jszip/bootstrap-redist.git</connection>
     <developerConnection>scm:git:git@github.com:jszip/bootstrap-redist.git</developerConnection>
     <url>http://github.com/jszip/bootstrap-redist/tree/master/</url>
-    <tag>HEAD</tag>
+    <tag>bootstrap-2.0.0</tag>
   </scm>
   <issueManagement>
     <system>github</system>
@@ -130,13 +130,13 @@
               <target>
                 <unzip src="${project.build.directory}/antrun/bootstrap.zip" dest="${project.build.outputDirectory}/">
                   <patternset>
-                    <include name="twitter-bootstrap-*/less/**/*.less"/>
-                    <include name="twitter-bootstrap-*/js/*.js"/>
-                    <include name="twitter-bootstrap-*/img/*.*"/>
-                    <include name="twitter-bootstrap-*/fonts/*.*"/>
+                    <include name="twitter-bootstrap-*/less/**/*.less" />
+                    <include name="twitter-bootstrap-*/js/*.js" />
+                    <include name="twitter-bootstrap-*/img/*.*" />
+                    <include name="twitter-bootstrap-*/fonts/*.*" />
                   </patternset>
                   <mapper>
-                    <regexpmapper from="twitter-bootstrap-[a-f0-9]*/(.*)" to="bootstrap/\1"/>
+                    <regexpmapper from="twitter-bootstrap-[a-f0-9]*/(.*)" to="bootstrap/\1" />
                   </mapper>
                 </unzip>
               </target>
