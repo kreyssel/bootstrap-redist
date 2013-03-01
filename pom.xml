@@ -25,7 +25,7 @@
 
   <groupId>org.jszip.redist</groupId>
   <artifactId>bootstrap</artifactId>
-  <version>2.2.3-SNAPSHOT</version>
+  <version>2.3.1-SNAPSHOT</version>
   <packaging>jszip</packaging>
 
   <name>Bootstrap</name>
@@ -110,8 +110,8 @@
               <goal>download-single</goal>
             </goals>
             <configuration>
-              <url>https://github.com/twitter/bootstrap/zipball</url>
-              <fromFile>v${bootstrap-version}</fromFile>
+              <url>https://github.com/twitter/bootstrap/archive/</url>
+              <fromFile>v${bootstrap-version}.zip</fromFile>
               <toFile>${project.build.directory}/antrun/bootstrap.zip</toFile>
             </configuration>
           </execution>
@@ -130,13 +130,14 @@
               <target>
                 <unzip src="${project.build.directory}/antrun/bootstrap.zip" dest="${project.build.outputDirectory}/">
                   <patternset>
-                    <include name="twitter-bootstrap-*/less/**/*.less" />
-                    <include name="twitter-bootstrap-*/js/*.js" />
-                    <include name="twitter-bootstrap-*/img/*.*" />
-                    <include name="twitter-bootstrap-*/fonts/*.*" />
+                    <include name="bootstrap-*/docs/assets/css/bootstrap*.css" />
+                    <include name="bootstrap-*/docs/assets/js/bootstrap.js" />
+                    <include name="bootstrap-*/img/*.*" />
+                    <include name="bootstrap-*/fonts/*.*" />
                   </patternset>
                   <mapper>
-                    <regexpmapper from="twitter-bootstrap-[a-f0-9]*/(.*)" to="bootstrap/\1" />
+                  	<!-- use last folder as subfolder for file -->
+                    <regexpmapper from="^bootstrap-.*/([a-z]+)/([a-z.-]+)$" to="\1/\2" />
                   </mapper>
                 </unzip>
               </target>

@@ -3,12 +3,15 @@
                xsi:schemaLocation="http://maven.apache.org/verifications/1.0.0 http://maven.apache.org/xsd/verifications-1.0.0.xsd">
   <files>
     <file>
-      <location>target/classes/bootstrap/less/bootstrap.less</location>
+      <location>target/classes/css/bootstrap.css</location>
       <contains>Bootstrap</contains>
     </file>
     <file>
-      <location>target/classes/bootstrap/js/bootstrap-button.js</location>
+      <location>target/classes/js/bootstrap.js</location>
       <contains>bootstrap-button.js</contains>
+    </file>
+    <file>
+      <location>target/classes/img/glyphicons-halflings.png</location>
     </file>
   </files>
 </verifications>
